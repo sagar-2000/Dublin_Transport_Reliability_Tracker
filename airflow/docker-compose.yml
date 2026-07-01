@@ -14,6 +14,7 @@ x-airflow-common: &airflow-common
     NTA_API_KEY: ${NTA_API_KEY}
     GTFS_RAW_DATA_DIR: /opt/airflow/data/raw
     GTFS_STATIC_DATA_DIR: /opt/airflow/data/static
+    AIRFLOW__LOGGING__LOGGING_CONFIG_CLASS: ""
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
