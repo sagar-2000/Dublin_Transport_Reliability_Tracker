@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.DS_Store
+data/raw/
+data/static/
+data/bronze/
+data/silver/
+data/gold/
+airflow/logs/
+airflow/.env
