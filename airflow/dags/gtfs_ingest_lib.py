@@ -50,6 +50,13 @@ def fetch_feed(feed_type: FeedType, api_key: str) -> dict:
         headers={"x-api-key": api_key},
         timeout=15,
     )
+    if response.status_code == 429:
+        # Raise a specific message so the Airflow log makes the cause obvious.
+        # The DAG's retry_delay (1 min) gives the rate limit time to clear.
+        raise requests.exceptions.HTTPError(
+            f"429 Rate limited by NTA API — will retry after backoff delay",
+            response=response,
+        )
     response.raise_for_status()
 
     feed = gtfs_realtime_pb2.FeedMessage()

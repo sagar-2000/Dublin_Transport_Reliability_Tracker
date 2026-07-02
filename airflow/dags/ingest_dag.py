@@ -23,7 +23,7 @@ from gtfs_ingest_lib import fetch_and_land
 DEFAULT_ARGS = {
     "owner": "dublin-transit-tracker",
     "retries": 2,
-    "retry_delay": timedelta(minutes=1),
+    "retry_delay": timedelta(minutes=5),
 }
 
 
