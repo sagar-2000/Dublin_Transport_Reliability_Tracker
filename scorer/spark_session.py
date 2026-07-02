@@ -9,21 +9,18 @@ is automatic.
 
 from __future__ import annotations
 from pyspark.sql import SparkSession
+from delta import configure_spark_with_delta_pip
 
 
 def get_spark(app_name: str = "dublin-transit-scorer") -> SparkSession:
-    return (
+    # configure_spark_with_delta_pip wires the Delta JARs automatically when
+    # delta-spark is installed via pip — this is the recommended approach and
+    # avoids the ClassNotFoundException you get when setting catalog config manually.
+    builder = (
         SparkSession.builder
         .appName(app_name)
-        # Run locally using all available cores.
         .master("local[*]")
-        # Wire in the Delta Lake extension.
-        .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
-        .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
-        # Limit executor memory to leave headroom for the OS and Airflow on the VM.
-        # 8GB gives PySpark enough room for stop_times.txt (large) without OOM.
         .config("spark.driver.memory", "8g")
-        # Suppress noisy INFO logs — WARNING and above only.
         .config("spark.sql.shuffle.partitions", "8")
-        .getOrCreate()
     )
+    return configure_spark_with_delta_pip(builder).getOrCreate()
