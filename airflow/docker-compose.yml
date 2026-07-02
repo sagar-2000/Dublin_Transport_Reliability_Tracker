@@ -47,8 +47,9 @@ services:
       - -c
       - |
         mkdir -p /opt/airflow/logs/scheduler /opt/airflow/logs/dag_processor_manager
-        chown -R 50000:0 /opt/airflow/logs
-        chmod -R 775 /opt/airflow/logs
+        mkdir -p /opt/airflow/data/raw/trip_updates /opt/airflow/data/raw/vehicle_positions /opt/airflow/data/static
+        chown -R 50000:0 /opt/airflow/logs /opt/airflow/data
+        chmod -R 775 /opt/airflow/logs /opt/airflow/data
         su -s /bin/bash airflow -c "airflow db migrate"
         su -s /bin/bash airflow -c "airflow users create \
           --username admin --password admin \
