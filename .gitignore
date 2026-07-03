@@ -8,6 +8,9 @@ data/raw/
 data/static/
 data/bronze/
 data/silver/
-data/gold/
+data/gold/*
+# Committed so the deployed API (no persistent disk on Render) has data to
+# serve. Refresh by re-running the pipeline on the Oracle VM and pushing.
+!data/gold/route_reliability_scores.csv
 airflow/logs/
 airflow/.env
