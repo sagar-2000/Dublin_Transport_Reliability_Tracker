@@ -16,3 +16,11 @@ export function fetchScores() {
 export function fetchLiveVehicles() {
   return getJson('/api/live?feed=vehicle_positions');
 }
+
+export function searchStops(query) {
+  return getJson(`/api/stops?search=${encodeURIComponent(query)}`);
+}
+
+export function fetchStop(stopId) {
+  return getJson(`/api/stops/${encodeURIComponent(stopId)}`);
+}

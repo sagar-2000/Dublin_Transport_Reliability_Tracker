@@ -10,6 +10,7 @@ const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
 const DATA_DIR = process.env.SCORING_DATA_DIR || path.join(REPO_ROOT, 'data');
 
 export const GOLD_CSV_PATH = path.join(DATA_DIR, 'gold', 'route_reliability_scores.csv');
+export const STOP_GOLD_CSV_PATH = path.join(DATA_DIR, 'gold', 'stop_reliability_scores.csv');
 
 export const NTA_API_KEY = process.env.NTA_API_KEY;
 

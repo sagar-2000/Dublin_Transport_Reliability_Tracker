@@ -16,6 +16,7 @@ import sys
 import bronze
 import silver
 import gold
+import stop_gold
 from spark_session import get_spark
 
 logging.basicConfig(
@@ -37,8 +38,11 @@ def main() -> int:
     log.info("--- Stage 2/3: Silver ---")
     silver.run(spark)
 
-    log.info("--- Stage 3/3: Gold ---")
+    log.info("--- Stage 3/4: Gold (routes) ---")
     gold.run(spark)
+
+    log.info("--- Stage 4/4: Gold (stops) ---")
+    stop_gold.run(spark)
 
     spark.stop()
     log.info("=== Pipeline complete ===")

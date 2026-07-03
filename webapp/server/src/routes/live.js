@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getLiveFeed } from '../lib/liveFeed.js';
+import { getLiveFeed, handleLiveFeedError } from '../lib/liveFeed.js';
 
 export const liveRouter = Router();
 
@@ -16,15 +16,6 @@ liveRouter.get('/', async (req, res, next) => {
     const data = await getLiveFeed(feedType);
     res.json(data);
   } catch (err) {
-    if (err.code === 'NO_API_KEY') {
-      return res.status(500).json({ error: 'Server is missing NTA_API_KEY' });
-    }
-    if (err.code === 'RATE_LIMITED') {
-      return res.status(429).json({ error: 'Rate limited by NTA API — try again shortly' });
-    }
-    if (err.code === 'UPSTREAM_ERROR') {
-      return res.status(502).json({ error: err.message });
-    }
-    next(err);
+    if (!handleLiveFeedError(err, res)) next(err);
   }
 });

@@ -18,6 +18,8 @@ BRONZE_BASE    = str(_BASE / "bronze")
 SILVER_PATH    = str(_BASE / "silver" / "stop_events")
 GOLD_PATH      = str(_BASE / "gold" / "route_reliability_scores")
 GOLD_CSV_PATH  = str(_BASE / "gold" / "route_reliability_scores.csv")
+STOP_GOLD_PATH     = str(_BASE / "gold" / "stop_reliability_scores")
+STOP_GOLD_CSV_PATH = str(_BASE / "gold" / "stop_reliability_scores.csv")
 
 # A trip is "on time" if it arrives no more than this many seconds late.
 ON_TIME_THRESHOLD_SEC = 300   # 5 minutes — standard transit industry threshold

@@ -29,5 +29,19 @@ Proxies and simplifies the NTA GTFS-Realtime feed (default `vehicle_positions`).
 Responses are cached in memory for `LIVE_FEED_CACHE_MS` (default 30s) per feed
 type to stay within NTA's fair-use rate limit.
 
+### `GET /api/stops?search=<query>`
+Searches `data/gold/stop_reliability_scores.csv` by stop name (case-insensitive
+substring match). Returns up to 20 `{stop_id, stop_name, stop_lat, stop_lon}` matches.
+
+### `GET /api/stops/:stopId`
+Returns `{ stop, reliability, feed_timestamp, arrivals }` for one stop:
+- `reliability` — that stop's avg delay / on-time % / score per day_type × hour_bucket
+- `arrivals` — buses currently reporting a stop_time_update for this stop in the
+  live TripUpdates feed, with `predicted_time` (absolute epoch, when the feed
+  provides one) and `delay_sec`. This stands in for a schedule without needing
+  the ~230MB static GTFS stop_times table — the tradeoff is it only shows buses
+  already actively reporting (typically the next ~1-2 hours of service), not a
+  full day's timetable. `404` if the stop_id isn't in the gold data.
+
 ### `GET /api/health`
 Liveness check.
